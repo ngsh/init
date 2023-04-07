@@ -1,4 +1,4 @@
-# Install basic stuffs
+# Install and config basic stuffs
 
 ## Terminal tools
 
@@ -16,3 +16,9 @@ brew bundle dump
 ### Vim
 ### Neovim
 ### VSCode
+
+## Configs
+
+- Kubernetes
+  - Kind
+  - Minikube

@@ -1,0 +1,17 @@
+# https://kind.sigs.k8s.io/docs/user/configuration/
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: c01
+#networking:
+  #podSubnet: "10.244.0.0/16"
+  #serviceSubnet: "10.96.0.0/12"
+  #disableDefaultCNI: true
+  #kubeProxyMode: "ipvs"
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+  #image: kindest/node:v1.16.4@sha256:b91a2c2317a000f3a783489dfb755064177dbc3a0b2f4147d50f04825d016f55
+  #extraMounts:
+  #extraPortMappings:

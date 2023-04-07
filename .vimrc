@@ -7,6 +7,10 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " required
 Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-fugitive'
+Plugin 'preservim/nerdtree'
+Plugin 'preservim/nerdcommenter'
+
+Plugin 'elzr/vim-json'
 "Plugin 'git://git.wincent.com/command-t.git'
 
 Plugin 'hashivim/vim-terraform'
@@ -23,7 +27,7 @@ filetype plugin indent on    " required
 set nu                       " number
 set rnu                      " relative number
 
-inoremap kj <Esc>
+inoremap jk <Esc>
 
 "" {{{ Colorscheme Config
 syntax enable
@@ -34,6 +38,15 @@ colorscheme molokai
 
 "" }}} Vim Config
 
+"" {{{ nerdtree
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+"" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+"" }}} nerdtree
 "" {{{ vim-terraform
 let g:terraform_fmt_on_save = 1
 "" }}} vim-terraform
