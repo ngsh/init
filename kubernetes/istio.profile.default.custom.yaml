@@ -12,6 +12,31 @@ spec:
     ingressGateways:
     - enabled: true
       name: istio-ingressgateway
+      k8s:
+        nodeSelector:
+          ingress-ready: "true"
+        service:
+          type: NodePort
+        tolerations:
+        - operator: "Exists"
+        overlays:
+        - apiVersion: apps/v1
+          kind: Deployment
+          name: istio-ingressgateway
+          patches:
+          - path: spec.template.spec.containers[0].ports
+            value:
+            - containerPort: 15021
+              protocol: TCP
+            - containerPort: 8080
+              hostPort: 80
+              protocol: TCP
+            - containerPort: 8443
+              hostPort: 443
+              protocol: TCP
+            - containerPort: 15090
+              name: http-envoy-prom
+              protocol: TCP
     istiodRemote:
       enabled: false
     pilot:
