@@ -1,52 +1,75 @@
-"" find default vundle config here: https://github.com/VundleVim/Vundle.vim
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" === vim-plug ===
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim' " required
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'preservim/nerdtree'
-Plugin 'preservim/nerdcommenter'
+" Essentials
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " Fuzzy finder (brew install fzf)
+Plug 'junegunn/fzf.vim'                                 " :Files, :Rg, etc.
+Plug 'tpope/vim-fugitive'                               " Git :G status, :G blame
+Plug 'airblade/vim-gitgutter'                           " Git diff in gutter
+Plug 'tpope/vim-commentary'                             " gcc to comment
+Plug 'tpope/vim-surround'                               " cs"', ds"
 
-Plugin 'elzr/vim-json'
-"Plugin 'git://git.wincent.com/command-t.git'
+" Syntax (blockchain)
+Plug 'tomlion/vim-solidity'                             " .sol
+Plug 'rust-lang/rust.vim'                               " .rs (Foundry)
+Plug 'pangloss/vim-javascript'                          " .js
+Plug 'leafgarland/typescript-vim'                       " .ts
+Plug 'maxmellon/vim-jsx-pretty'                         " JSX
 
-Plugin 'hashivim/vim-terraform'
+" Theme (light & fast)
+Plug 'morhetz/gruvbox'
 
-"" color schemes
-Plugin 'tomasr/molokai'
+call plug#end()
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+" === Basic Settings ===
+set nocompatible
+filetype plugin indent on
+syntax on
+set number
+set relativenumber
+set cursorline
+set hidden
+set incsearch
+set hlsearch
+set ignorecase smartcase
+set tabstop=2 shiftwidth=2 expandtab
+set autoindent
+set mouse=a
+"set clipboard=unnamedplus   " macOS: pbcopy/pbpaste
+set updatetime=100          " GitGutter refresh
 
-"" `:source %` to reload current file
+" === Colors ===
+colorscheme gruvbox
+set background=dark
 
-"" {{{ Vim Config
-set nu                       " number
-set rnu                      " relative number
+" === Keymaps ===
+let mapleader = " "
 
-inoremap jk <Esc>
+" FZF
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :Rg<CR>
+nnoremap <leader>b :Buffers<CR>
 
-"" {{{ Colorscheme Config
-syntax enable
-colorscheme molokai
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-"" }}} Colorscheme Config
+" Git
+nnoremap <leader>gs :G status<CR>
+nnoremap <leader>gc :G commit<CR>
+nnoremap <leader>gp :G push<CR>
 
-"" }}} Vim Config
+" Clear search
+nnoremap <leader>h :nohlsearch<CR>
 
-"" {{{ nerdtree
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-"" Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-"" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-"" }}} nerdtree
-"" {{{ vim-terraform
-let g:terraform_fmt_on_save = 1
-"" }}} vim-terraform
+" === Plugin Settings ===
+" GitGutter
+let g:gitgutter_enabled = 1
+let g:gitgutter_map_keys = 0
+
+" FZF
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob "!.git/*"'
+
+" === Auto Commands ===
+augroup blockchain
+  autocmd!
+  autocmd FileType solidity setlocal tabstop=4 shiftwidth=4
+  autocmd FileType rust setlocal tabstop=4 shiftwidth=4
+augroup END
+
