@@ -1,0 +1,18 @@
+{
+    "workbench.colorTheme": "Default Light Modern",
+    "claudeCode.environmentVariables": [
+        {
+            "name": "https_proxy",
+            "value": "http://127.0.0.1:7890"
+        },
+        {
+            "name": "http_proxy",
+            "value": "http://127.0.0.1:7890"
+        },
+        {
+            "name": "all_proxy",
+            "value": "socks5://127.0.0.1:7890"
+        }
+    ],
+    "claudeCode.preferredLocation": "panel"
+}
