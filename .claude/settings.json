@@ -12,7 +12,8 @@
       "Read(~/**/*.pem)",
       "Read(~/**/*.key)",
       "Read(~/**/*.wif)",
-      "Read(~/**/.wif)"
+      "Read(~/**/.wif)",
+      "Read(~/**/.env*)"
     ]
   }
 }
